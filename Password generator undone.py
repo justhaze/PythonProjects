@@ -1,25 +1,32 @@
 import random
 
-#list of items
-DIGITS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'] 
- 
-CHARACTERS = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'M', 'N', 'O', 'P', 'Q','R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y','Z']
- 
+DIGITS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+CHARACTERS = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
 SYMBOLS = ['@', '#', '$', '%', '=', ':', '?', '.', '/', '|', '~', '>', '*', '(', ')', '<']
-    
 
+def generate_password(length):
+    # determine how many digits and characters are needed
+    digit_count = max(1, length // 3)
+    char_count = length - digit_count
 
-password = []
+    # randomly select digits and characters
+    password = []
+    for i in range(digit_count):
+        password.append(random.choice(DIGITS))
+    for i in range(char_count):
+        password.append(random.choice(CHARACTERS))
 
-char_amount = int(input("How many chars do you want to use? "))
+    # add symbols
+    if len(password) < length:
+        for i in range(length - len(password)):
+            password.append(random.choice(SYMBOLS))
 
-for nums in range(1, char_amount + 1):
-    randdigits = random.choice(DIGITS)
-    password += randdigits
-print(password)
+    # shuffle the password
+    random.shuffle(password)
 
-# symbol_ammount = input("How many symbols do you want to use? ")
+    # return the password as a string
+    return ''.join(password)
 
-# password_length = digit_amount + char_amount + symbol_ammount
-
-
+# usage example
+password_length = int(input("Enter the desired password length: "))
+print("Generated password:", generate_password(password_length))
